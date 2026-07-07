@@ -10,10 +10,13 @@ import java.util.List;
 public class Logic {
     private UserTestDataTracker userTestDataTracker;
     private SubjectManager subjectManager;
-    public Logic(String filePath) {
+    private UserStatistics userStatistics;
+    public Logic(String variants, String stat) {
         userTestDataTracker = new UserTestDataTracker();
         subjectManager = new SubjectManager();
-        subjectManager.populateData(filePath);
+        userStatistics = new UserStatistics();
+        subjectManager.populateData(variants);
+        userStatistics.populateStatistics(stat);
     }
     /**
      * Возвращает текст после обработки
@@ -21,6 +24,38 @@ public class Logic {
     public List<String> ResponseMessage(String text, String userId){
         List<String> output = new ArrayList<>();
         switch (text) {
+            case "/statistic":
+                List<String> subjects = subjectManager.allSubjects();
+                output.add("Статистика за последние 5 вариантов по каждому предмету:");
+                for(String sub : subjects){
+                    if(userStatistics.check(sub, userId)){
+                        String result = sub + ": средний балл " +
+                                userStatistics.getAverageScore(sub, userId) +"/" +
+                                subjectManager.getVariant(sub, 1).getNumberOfQuestions()
+                                + ", среднее время выполнения задач -";
+                        Long time = userStatistics.getAverageTime(sub, userId);
+                        Long hours = time / 3600000;
+                        time %= 3600000;
+                        Long minutes = time / 60000;
+                        time %= 60000;
+                        Long seconds = time / 1000;
+                        if(hours > 0){
+                            result += " " + hours + " час";
+                        }
+                        if(minutes > 0){
+                            result += " " + minutes + " минут";
+                        }
+                        if(seconds > 0){
+                            result += " " + seconds + " секунд";
+                        }
+                        output.add(result + ".");
+
+                    }
+                    else{
+                        output.add(sub + ": не решено ни одного варианта.");
+                    }
+                }
+                return output;
             case "/exitTest":
                 if(userTestDataTracker.checkUser(userId)) {
                     userTestDataTracker.removeUser(userId);
@@ -61,7 +96,7 @@ public class Logic {
                         if (subjectManager.allSubjects().contains(text)) {
                             userTestDataTracker.addData(userId, text,0l);
                             String result = "Введите вариант, всего доступно " +
-                                   subjectManager.quantityVariants(text) + " вариантов";
+                                    subjectManager.quantityVariants(text) + " вариантов";
                             output.add(result);
                         }
                         else{
@@ -82,8 +117,8 @@ public class Logic {
                                 userTestDataTracker.addData(userId,
                                         userTestDataTracker.getSubject(userId), (long) number);
                                 output.add(subjectManager.getVariant(
-                                        userTestDataTracker.getSubject(userId),
-                                        userTestDataTracker.getOption(userId).intValue()).
+                                                userTestDataTracker.getSubject(userId),
+                                                userTestDataTracker.getOption(userId).intValue()).
                                         getQuestion(Math.toIntExact(userTestDataTracker.getNumberOfQuestion(userId))));
 
                             }
@@ -121,12 +156,16 @@ public class Logic {
                                 "Пройти тест заново или выйти?";
                         output.add(result);
                         userTestDataTracker.addNumberOfQuestion(userId);
+                        userStatistics.addStat(userTestDataTracker.getSubject(userId),
+                                userId,
+                                userTestDataTracker.getRightNumberOfQuestion(userId),
+                                userTestDataTracker.getElapsedUserTime(userId));
                     }
                     else if(userTestDataTracker.getNumberOfQuestion(userId) <
                             subjectManager.getVariant(
                                             userTestDataTracker.getSubject(userId),
                                             userTestDataTracker.getOption(userId).intValue())
-                                            .getNumberOfQuestions()){
+                                    .getNumberOfQuestions()){
                         String question = subjectManager.getVariant(userTestDataTracker.getSubject(userId),
                                         userTestDataTracker.getOption(userId).intValue())
                                 .getQuestion(userTestDataTracker
