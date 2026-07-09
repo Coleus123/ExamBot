@@ -3,6 +3,7 @@ package ru.urfu;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.urfu.model.UserData;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

@@ -3,6 +3,8 @@ package ru.urfu;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.urfu.model.UserData;
+import ru.urfu.model.UserTestDataTracker;
 
 import static org.junit.jupiter.api.Assertions.*;
 

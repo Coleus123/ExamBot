@@ -2,7 +2,7 @@ package ru.urfu;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.urfu.QuesAns;
+import ru.urfu.model.QuesAns;
 
 import static org.junit.jupiter.api.Assertions.*;
 

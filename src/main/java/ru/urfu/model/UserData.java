@@ -1,5 +1,5 @@
 // UserData.java
-package ru.urfu;
+package ru.urfu.model;
 
 /**
  * Хранит данные пользователя

@@ -3,8 +3,8 @@ package ru.urfu;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
-
-import java.io.File;
+import ru.urfu.bot.TelegramBot;
+import ru.urfu.core.Logic;
 
 /**
  * Основной класс для запуска приложения

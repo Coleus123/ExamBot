@@ -5,6 +5,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import ru.urfu.core.Constants;
+import ru.urfu.core.TestStateHandler;
+import ru.urfu.manager.SubjectManager;
+import ru.urfu.model.UserData;
+import ru.urfu.model.UserTestDataTracker;
 
 import java.io.File;
 import java.io.FileWriter;

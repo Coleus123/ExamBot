@@ -3,6 +3,11 @@ package ru.urfu;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.urfu.core.CommandHandler;
+import ru.urfu.core.Constants;
+import ru.urfu.manager.SubjectManager;
+import ru.urfu.model.UserData;
+import ru.urfu.model.UserTestDataTracker;
 
 import java.util.List;
 

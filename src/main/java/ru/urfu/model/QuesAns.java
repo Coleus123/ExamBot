@@ -1,4 +1,4 @@
-package ru.urfu;
+package ru.urfu.model;
 
 import java.util.ArrayList;
 import java.util.List;

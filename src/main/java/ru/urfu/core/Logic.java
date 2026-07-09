@@ -1,7 +1,9 @@
 // Logic.java
-package ru.urfu;
+package ru.urfu.core;
 
-import java.util.ArrayList;
+import ru.urfu.manager.SubjectManager;
+import ru.urfu.model.UserTestDataTracker;
+
 import java.util.List;
 
 /**
