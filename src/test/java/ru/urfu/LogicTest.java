@@ -1,4 +1,4 @@
-
+// LogicTest.java - исправленная версия (добавлен тест на hasSubject)
 package ru.urfu;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -12,11 +12,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
 /**
  * Тест текстовых методов бота
  */
-
 public class LogicTest {
     Logic logic;
 
@@ -56,55 +54,45 @@ public class LogicTest {
         logic = new Logic(tempDir.getPath() + "\\Test");
     }
 
-
-/**
+    /**
      * Проверяет правильно ли выводит введенный пользователем текст с префиксом
      */
-
     @Test
     public void testResponseMessageInputPrefix() {
-
         String InputMessage = "Hello World!";
         String ExpectedMessage = "Вы ввели: " + "Hello World!";
         List<String> OutputMessage = logic.ResponseMessage(InputMessage, "user1");
         assertEquals(ExpectedMessage, OutputMessage.get(0));
     }
 
-
-/**
+    /**
      * Проверяет правильно ли выводит текст при начале разговора с пользователем
      */
-
     @Test
     public void TestResponseMessageStart() {
-
         String InputMessage = "/start";
         String ExpectedMessage = "Привет! Я Текстовый бот. Напиши /help, чтобы узнать больше";
         List<String> OutputMessage = logic.ResponseMessage(InputMessage, "user2");
         assertEquals(ExpectedMessage, OutputMessage.get(0));
     }
 
-
-/**
-     * Проверяет правильно ли выводит справку, если попросит пользовватель
+    /**
+     * Проверяет правильно ли выводит справку
      */
-
     @Test
     public void testResponseMessageHelp() {
         String InputMessage = "/help";
         String ExpectedMessage = "Я Текстовый бот, у меня есть несколько функций:\n" +
-                " 1) Я могу отправлять Вам, что Вы ввели в чат \n " +
-                "2) Если напишите /help, то я Вам расскажу о себе" +
+                "1) Я могу отправлять Вам, что Вы ввели в чат\n" +
+                "2) Если напишите /help, то я Вам расскажу о себе\n" +
                 "3) Если напишите /startTest, то запустится режим тестирования, чтобы выйти из режима тестирования напишите /exitTest";
         List<String> OutputMessage = logic.ResponseMessage(InputMessage, "user3");
         assertEquals(ExpectedMessage, OutputMessage.get(0));
     }
 
-
-/**
+    /**
      * Проверяет, правильно ли выводится текст, если тест еще не начат
      */
-
     @Test
     public void testResponseMessageExit1() {
         List<String> outputMessage = logic.ResponseMessage("/exitTest", "user4");
@@ -112,11 +100,9 @@ public class LogicTest {
         assertEquals(expectedMessage, outputMessage.get(0));
     }
 
-
-/**
+    /**
      * Проверяет, правильно ли выводится текст, если идет тест
      */
-
     @Test
     public void testResponseMessageExit2() {
         logic.ResponseMessage("/startTest", "user5");
@@ -124,24 +110,20 @@ public class LogicTest {
         assertEquals("Вы вышли из теста", outputMessage.get(0));
     }
 
-
-/**
+    /**
      * Проверяет, правильно ли выводится вопрос при начале теста
      */
-
     @Test
-    public void testResponseMessageStart() {
+    public void testResponseMessageStartTest() {
         assertEquals("Выберите предмет: Математика/",
                 logic.ResponseMessage("/startTest", "user6").get(0));
     }
 
-
-/**
-     * Проверяет, правильно ли выдаются результаты теста
+    /**
+     * Проверяет, правильно ли выдаются результаты теста при правильном ответе
      */
-
     @Test
-    public void testResponseMessageRightTest() throws InterruptedException {
+    public void testResponseMessageRightTest() {
         assertEquals("Выберите предмет: Математика/",
                 logic.ResponseMessage("/startTest", "user6").get(0));
         assertEquals("Введите вариант, всего доступно 1 вариантов",
@@ -149,15 +131,13 @@ public class LogicTest {
         assertEquals("Вопрос", logic.ResponseMessage("1", "user6").get(0));
         List<String> outputMessage = logic.ResponseMessage("Ответ", "user6");
         assertEquals("Вы ответили правильно", outputMessage.get(0));
-        assertEquals("Тест завершен за 0 секунд." +
-                " Правильное количество ответов - 1/1. Пройти тест заново или выйти?", outputMessage.get(1));
+        assertEquals("Тест завершен за 0 секунд. Правильное количество ответов - 1/1. Пройти тест заново или выйти?",
+                outputMessage.get(1));
     }
 
-
-/**
-     * Проверяет, правильно ли подсчитываются результаты
+    /**
+     * Проверяет, правильно ли подсчитываются результаты при неправильном ответе
      */
-
     @Test
     public void testResponseMessageWrongTest() throws InterruptedException {
         assertEquals("Выберите предмет: Математика/",
@@ -170,7 +150,31 @@ public class LogicTest {
         Thread.sleep(1010);
         List<String> outputMessage = logic.ResponseMessage("Не ответ", "user6");
         assertEquals("Вы ответили неправильно", outputMessage.get(0));
-        assertEquals("Тест завершен за 1 секунд." +
-                " Правильное количество ответов - 0/1. Пройти тест заново или выйти?", outputMessage.get(1));
+        assertEquals("Тест завершен за 1 секунд. Правильное количество ответов - 0/1. Пройти тест заново или выйти?",
+                outputMessage.get(1));
+    }
+
+    /**
+     * Проверяет обработку несуществующего предмета
+     */
+    @Test
+    public void testResponseMessageUnknownSubject() {
+        assertEquals("Выберите предмет: Математика/",
+                logic.ResponseMessage("/startTest", "user7").get(0));
+        assertEquals("Нет такого предмета. Доступны следующие предметы: Математика/",
+                logic.ResponseMessage("Физика", "user7").get(0));
+    }
+
+    /**
+     * Проверяет обработку некорректного ввода номера варианта
+     */
+    @Test
+    public void testResponseMessageInvalidOption() {
+        assertEquals("Выберите предмет: Математика/",
+                logic.ResponseMessage("/startTest", "user8").get(0));
+        assertEquals("Введите вариант, всего доступно 1 вариантов",
+                logic.ResponseMessage("Математика", "user8").get(0));
+        assertEquals("Ошибка: некорректный формат числа",
+                logic.ResponseMessage("abc", "user8").get(0));
     }
 }

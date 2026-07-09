@@ -1,108 +1,91 @@
+// UserTestDataTracker.java
 package ru.urfu;
 
 import java.util.HashMap;
 import java.util.Map;
 
-
-
 /**
- * Класс хранит данные каждого пользоваетля: номер вопроса, количество правильных ответов, время начала теста
+ * Класс хранит данные каждого пользователя: номер вопроса, количество правильных ответов, время начала теста
  */
 public class UserTestDataTracker {
-    private Map<String, UserData> dataMap;
+    private final Map<String, UserData> dataMap = new HashMap<>();
 
     /**
-     * Конструктор для создания экзепляра класса UserTestDataTracker
+     * Начинает тест для пользователя
+     * @param userId идентификатор пользователя
+     * @param subject название предмета
      */
-    public UserTestDataTracker() {
-        dataMap = new HashMap<String, UserData>();
+    public void startTest(String userId, String subject) {
+        dataMap.put(userId, new UserData(subject, 0L));
     }
 
     /**
-     *Добавляет данные по прохождению теста нового пользователя
+     * Выбирает вариант для пользователя
+     * @param userId идентификатор пользователя
+     * @param option номер варианта
      */
-    public void addData(String userId, String subject, Long option) {
-        UserData userData = new UserData();
-        userData.addUserStateExam(subject, option);
-        dataMap.put(userId, userData);
-    }
-
-    /**
-     * Возвращает предмет
-     */
-    public String getSubject(String userId) {
-        return dataMap.get(userId).getSubject();
-    }
-
-    /**
-     * Возвращает номер варианта
-     */
-    public Long getOption(String userId) {
-        return dataMap.get(userId).getOption();
-    }
-
-    /**
-     *Возвращает номер вопроса на котором сейчас пользователь
-     */
-    public Long getNumberOfQuestion(String userId) {
-        return dataMap.get(userId).getNumQues();
-    }
-
-    /**
-     *Возвращает количество правильных отвеченных вопросов пользователем
-     */
-    public Long getRightNumberOfQuestion(String userId) {
-        return dataMap.get(userId).getRightNumQues();
-    }
-
-    /**
-     *Возвращает время начала теста пользователя
-     */
-    public Long getUserTime(String userId) {
-        return dataMap.get(userId).getStartTime();
-    }
-    /**
-     * Переводит пользователя на следующий вопрос
-     */
-
-    public void addNumberOfQuestion(String userId){
-        dataMap.get(userId).setNumQues(dataMap.get(userId).getNumQues()+1);
-    }
-    /**
-     * В случае правильного ответа добавляет еденицу к количесту правильных ответов
-     */
-    public void addRightNumberOfQuestion(String userId, Boolean rightAnswer){
-        if (rightAnswer){
-            dataMap.get(userId).setRightNumQues(dataMap.get(userId).getRightNumQues()+1);
+    public void selectOption(String userId, Long option) {
+        UserData data = dataMap.get(userId);
+        if (data != null) {
+            data.setOption(option);
         }
     }
 
     /**
-     *Возвращает время, затраченное пользователем на тест
+     * Возвращает данные пользователя
+     * @param userId идентификатор пользователя
+     * @return данные пользователя
      */
-    public Long getElapsedUserTime(String userId){
-        Long ElapsedTime = System.currentTimeMillis() - dataMap.get(userId).getStartTime();
-        return ElapsedTime;
+    public UserData getUserData(String userId) {
+        return dataMap.get(userId);
     }
 
     /**
-     *Удаляет данные пользователя
+     * Переводит пользователя на следующий вопрос
+     * @param userId идентификатор пользователя
+     */
+    public void moveToNextQuestion(String userId) {
+        UserData data = dataMap.get(userId);
+        if (data != null) {
+            data.incrementNumberOfQuestion();
+        }
+    }
+
+    /**
+     * Отмечает ответ пользователя
+     * @param userId идентификатор пользователя
+     * @param correct правильный ли ответ
+     */
+    public void markAnswer(String userId, boolean correct) {
+        UserData data = dataMap.get(userId);
+        if (data != null && correct) {
+            data.incrementRightNumberOfQuestion();
+        }
+    }
+
+    /**
+     * Удаляет данные пользователя
+     * @param userId идентификатор пользователя
      */
     public void removeUser(String userId) {
         dataMap.remove(userId);
     }
 
     /**
-     *Позволяет получить количество пользователей, проходящих тест
+     * Проверяет, проходит ли пользователь тест
+     * @param userId идентификатор пользователя
+     * @return true если пользователь в тесте
      */
-    public Integer getSizeOfUsers(){
-        return dataMap.size();
-    }
-    /**
-     * Проверяет проходит ли в данный момент пользователь тест
-     */
-    public Boolean checkUser(String userId){
+    public boolean isUserInTest(String userId) {
         return dataMap.containsKey(userId);
     }
 
+    /**
+     * Возвращает время, затраченное пользователем на тест
+     * @param userId идентификатор пользователя
+     * @return время в миллисекундах
+     */
+    public Long getElapsedTime(String userId) {
+        return System.currentTimeMillis() - dataMap.get(userId).getStartTime();
+    }
 }

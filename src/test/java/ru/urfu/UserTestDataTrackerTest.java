@@ -1,3 +1,4 @@
+// UserTestDataTrackerTest.java - исправленная версия
 package ru.urfu;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -10,90 +11,88 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class UserTestDataTrackerTest {
     private UserTestDataTracker testDataTracker;
+
     @BeforeEach
     void setUp() {
         testDataTracker = new UserTestDataTracker();
-
     }
 
     /**
-     * Проверяет метод на добавление AppData,
-     * возвращения номера ответа, на котором сейчас пользователь GetNumberOfQuestion,
-     * возвращения количества правильных отетов GetRightNumberOfQuestion,
-     * возвращения времени начала теста GetUserTime
+     * Проверяет метод startTest и получение данных
      */
     @Test
-    void addDataTestAndGetNumberOfQuestionTestAndGetRightNumberOfQuestionTestAndGetUserTimeTest()
-            throws InterruptedException {
-        testDataTracker.addData("user1","Математика",2l);
-        assertEquals("Математика", testDataTracker.getSubject("user1"));
-        assertEquals(2l, testDataTracker.getOption("user1"));
-        assertEquals(0, testDataTracker.getNumberOfQuestion("user1"));
-        assertEquals(0, testDataTracker.getRightNumberOfQuestion("user1"));
+    void startTestAndGetDataTest() throws InterruptedException {
+        testDataTracker.startTest("user1", "Математика");
+        UserData data = testDataTracker.getUserData("user1");
+
+        assertEquals("Математика", data.getSubject());
+        assertEquals(0L, data.getOption());
+        assertEquals(0L, data.getNumberOfQuestion());
+        assertEquals(0L, data.getRightNumberOfQuestion());
         Thread.sleep(100);
-        assertEquals(System.currentTimeMillis() - testDataTracker.getUserTime("user1")
-                , 100, 50);
-    }
-
-
-    /**
-     * Проверяет метод AddNumberOfQuestion на добавление еденицы к номеру вопроса, на котором сейчас пользователь
-     */
-    @Test
-    void addNumberOfQuestion() {
-        testDataTracker.addData("user2","Информатика",2L);
-        testDataTracker.addNumberOfQuestion("user2");
-        assertEquals(1, testDataTracker.getNumberOfQuestion("user2"));
+        assertEquals(100, System.currentTimeMillis() - data.getStartTime(), 50);
     }
 
     /**
-     * Проверяет на добавление еденицы к количеству правильно отвеченных вопросов пользователем
+     * Проверяет метод selectOption
      */
     @Test
-    void addRightNumberOfQuestion() {
-        testDataTracker.addData("user3","Информатика",2L);
-        testDataTracker.addRightNumberOfQuestion("user3", Boolean.TRUE);
-        assertEquals(1, testDataTracker.getRightNumberOfQuestion("user3"));
-        testDataTracker.addRightNumberOfQuestion("user3", Boolean.FALSE);
-        assertEquals(1, testDataTracker.getRightNumberOfQuestion("user3"));
+    void selectOptionTest() {
+        testDataTracker.startTest("user2", "Информатика");
+        testDataTracker.selectOption("user2", 2L);
+        assertEquals(2L, testDataTracker.getUserData("user2").getOption());
     }
 
     /**
-     * Проверяет метод удаления пользователя
+     * Проверяет метод moveToNextQuestion
      */
     @Test
-    void RemoveUserTestAndGetSizeOfUsersTest(){
-        testDataTracker.addData("user","Информатика",2L);
-        assertEquals(1, testDataTracker.getSizeOfUsers());
-        testDataTracker.removeUser("user");
-        assertEquals(0, testDataTracker.getSizeOfUsers());
+    void moveToNextQuestionTest() {
+        testDataTracker.startTest("user3", "Информатика");
+        testDataTracker.moveToNextQuestion("user3");
+        assertEquals(1L, testDataTracker.getUserData("user3").getNumberOfQuestion());
     }
+
     /**
-     *Проверяет правильно ли выдается время в миллисекундах, потраченное пользователем на тест
+     * Проверяет метод markAnswer
      */
     @Test
-    void GetElapsedUserTimeTest() throws InterruptedException {
-        testDataTracker.addData("user4","Информатика",2l);
+    void markAnswerTest() {
+        testDataTracker.startTest("user4", "Информатика");
+        testDataTracker.markAnswer("user4", true);
+        assertEquals(1L, testDataTracker.getUserData("user4").getRightNumberOfQuestion());
+        testDataTracker.markAnswer("user4", false);
+        assertEquals(1L, testDataTracker.getUserData("user4").getRightNumberOfQuestion());
+    }
+
+    /**
+     * Проверяет метод removeUser
+     */
+    @Test
+    void removeUserTest() {
+        testDataTracker.startTest("user5", "Информатика");
+        assertTrue(testDataTracker.isUserInTest("user5"));
+        testDataTracker.removeUser("user5");
+        assertFalse(testDataTracker.isUserInTest("user5"));
+    }
+
+    /**
+     * Проверяет метод getElapsedTime
+     */
+    @Test
+    void getElapsedTimeTest() throws InterruptedException {
+        testDataTracker.startTest("user6", "Информатика");
         Thread.sleep(100);
-        assertEquals(100, testDataTracker.getElapsedUserTime("user4"), 50);
+        assertEquals(100, testDataTracker.getElapsedTime("user6"), 50);
     }
 
     /**
-     * Проверяет метод, который проверяет проходит ли  пользователь тест(правильный вариант)
+     * Проверяет метод isUserInTest
      */
     @Test
-    void CheckUserRightTest(){
-        testDataTracker.addData("user5","Информатика",2l);
-        assertEquals(Boolean.TRUE,testDataTracker.checkUser("user5"));
+    void isUserInTestTest() {
+        testDataTracker.startTest("user7", "Информатика");
+        assertTrue(testDataTracker.isUserInTest("user7"));
+        assertFalse(testDataTracker.isUserInTest("user8"));
     }
-
-    /**
-     * Проверяет метод, который проверяет проходит ли  пользователь тест(неправильный вариант)
-     */
-    @Test
-    void CheckUserWrongTest(){
-        testDataTracker.addData("user5","Информатика",2l);
-        assertEquals(Boolean.FALSE,testDataTracker.checkUser("user6"));
-    }
-
 }

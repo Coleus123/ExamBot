@@ -1,62 +1,68 @@
+// UserDataTest.java - исправленная версия
 package ru.urfu;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UserDataTest {
     private UserData userData;
 
-    /**
-     * dsfsdf
-     * @throws Exception
-     */
     @BeforeEach
-    public void setUp() throws Exception {
-        userData = new UserData();
+    public void setUp() {
+        userData = new UserData("Математика", 2L);
     }
 
     /**
-     * Проверяет правильно ли добавляется пользователь, проходящий тест
+     * Проверяет правильно ли создается пользователь, проходящий тест
      */
     @Test
-    public void addUserStateExamTest() throws InterruptedException {
-        userData.addUserStateExam("Математика", 2l);
+    public void userDataConstructorTest() throws InterruptedException {
         assertEquals("Математика", userData.getSubject());
-        assertEquals(2,userData.getOption());
-        assertEquals(0l,userData.getNumQues());
-        assertEquals(0l,userData.getRightNumQues());
+        assertEquals(2L, userData.getOption());
+        assertEquals(0L, userData.getNumberOfQuestion());
+        assertEquals(0L, userData.getRightNumberOfQuestion());
         Thread.sleep(100);
         assertEquals(100, System.currentTimeMillis() - userData.getStartTime(), 50);
     }
 
     /**
-     * Проверяет праивльно ли присваеивается вариант
+     * Проверяет правильно ли присваивается вариант
      */
     @Test
-    public void setOptionTest(){
-        userData.addUserStateExam("Информатика", 3l);
-        userData.setOption(2l);
-        assertEquals(2l,userData.getOption());
-    }
-    /**
-     * Проверяет праивльно ли присваивается номер вопроса
-     */
-    @Test
-    public void setNumQuesTest(){
-        userData.addUserStateExam("Информатика", 3l);
-        userData.setNumQues(5l);
-        assertEquals(5l, userData.getNumQues());
+    public void setOptionTest() {
+        userData.setOption(3L);
+        assertEquals(3L, userData.getOption());
     }
 
     /**
-     * Проверяет праивльно ли присваивается количество правильных ответов
+     * Проверяет правильно ли инкрементируется номер вопроса
      */
     @Test
-    public void setRightNumQuesTest(){
-        userData.addUserStateExam("Информатика", 3l);
-        userData.setRightNumQues(5l);
-        assertEquals(5l, userData.getRightNumQues());
+    public void incrementNumberOfQuestionTest() {
+        userData.incrementNumberOfQuestion();
+        assertEquals(1L, userData.getNumberOfQuestion());
+    }
+
+    /**
+     * Проверяет правильно ли инкрементируется количество правильных ответов
+     */
+    @Test
+    public void incrementRightNumberOfQuestionTest() {
+        userData.incrementRightNumberOfQuestion();
+        assertEquals(1L, userData.getRightNumberOfQuestion());
+    }
+
+    /**
+     * Проверяет метод isSubjectSelected
+     */
+    @Test
+    public void isSubjectSelectedTest() {
+        assertTrue(userData.isSubjectSelected());
+        UserData emptyUser = new UserData(UserData.NO_SUBJECT, 0L);
+        assertFalse(emptyUser.isSubjectSelected());
     }
 }

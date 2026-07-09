@@ -1,9 +1,6 @@
+// SubjectManagerTest.java - исправленная версия
 package ru.urfu;
 
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,8 +9,6 @@ import org.junit.jupiter.api.io.TempDir;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -79,5 +74,47 @@ class SubjectManagerTest {
     public void testAllSubjects() {
         subjectManager.populateData(tempDir.getPath() + "\\Test");
         assertEquals("Математика", subjectManager.allSubjects().get(0));
+    }
+
+    /**
+     * Тестирует метод hasSubject
+     */
+    @Test
+    public void testHasSubject() {
+        subjectManager.populateData(tempDir.getPath() + "\\Test");
+        assertTrue(subjectManager.hasSubject("Математика"));
+        assertFalse(subjectManager.hasSubject("Физика"));
+    }
+
+    /**
+     * Тестирует метод quantityVariants
+     */
+    @Test
+    public void testQuantityVariants() {
+        subjectManager.populateData(tempDir.getPath() + "\\Test");
+        assertEquals(1, subjectManager.quantityVariants("Математика"));
+        assertEquals(0, subjectManager.quantityVariants("Физика"));
+    }
+
+    /**
+     * Тестирует получение варианта с несуществующим номером
+     */
+    @Test
+    public void testGetVariantInvalidNumber() {
+        subjectManager.populateData(tempDir.getPath() + "\\Test");
+        assertNull(subjectManager.getVariant("Математика", 0));
+        assertNull(subjectManager.getVariant("Математика", 2));
+        assertNull(subjectManager.getVariant("Физика", 1));
+    }
+
+    /**
+     * Тестирует загрузку из несуществующей директории
+     */
+    @Test
+    public void testPopulateDataNonExistentDirectory() {
+        subjectManager.populateData(tempDir.getPath() + "\\NonExistent");
+        assertTrue(subjectManager.allSubjects().isEmpty());
+        assertEquals(0, subjectManager.quantityVariants("Математика"));
+        assertFalse(subjectManager.hasSubject("Математика"));
     }
 }

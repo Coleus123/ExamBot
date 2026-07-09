@@ -1,85 +1,76 @@
+// UserData.java
 package ru.urfu;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Хранит данные пользователя
  */
 public class UserData {
     private String subject;
-    private List<Long> data;
+    private Long option;
+    private Long numberOfQuestion;
+    private Long rightNumberOfQuestion;
+    private Long startTime;
+
+    public static final String NO_SUBJECT = "None";
 
     /**
-     * Конструктор
+     * Конструктор для создания данных пользователя
+     * @param subject название предмета
+     * @param option номер варианта
      */
-    public UserData(){
-        data = new ArrayList<>();
-    }
-
-    /**
-     * Добавляет пользователя, который прохобит пробник по экзамену
-     */
-    public void addUserStateExam (String subject, Long option){
+    public UserData(String subject, Long option) {
         this.subject = subject;
-        data.add(option);
-        data.add(0L);
-        data.add(0L);
-        data.add(System.currentTimeMillis());
-    }
-
-    /**
-     * Меняет номер вопроса
-     */
-    public void setOption (Long option){
-        this.data.set(0, option);
-    }
-    /**
-     * Меняет номер вопроса
-     */
-    public void setNumQues(Long numQues) {
-            data.set(1, numQues);
-    }
-
-    /**
-     * Меняет количество правильных ответов
-     */
-    public void setRightNumQues(Long rightNumQues){
-            data.set(2, rightNumQues);
+        this.option = option;
+        this.numberOfQuestion = 0L;
+        this.rightNumberOfQuestion = 0L;
+        this.startTime = System.currentTimeMillis();
     }
 
     /**
      * Возвращает предмет
      */
-    public String getSubject() {
-        return subject;
-    }
+    public String getSubject() { return subject; }
 
     /**
      * Возвращает номер варианта
      */
-    public Long getOption(){
-        return data.get(0);
-    }
+    public Long getOption() { return option; }
+
     /**
      * Возвращает номер вопроса, на котором сейчас пользователь
      */
-    public Long getNumQues() {
-        return data.get(1);
-    }
+    public Long getNumberOfQuestion() { return numberOfQuestion; }
 
     /**
-     * Возвращает количество праивльно отвеченных вопросов
+     * Возвращает количество правильно отвеченных вопросов
      */
-    public Long getRightNumQues() {
-        return data.get(2);
-    }
+    public Long getRightNumberOfQuestion() { return rightNumberOfQuestion; }
 
     /**
      * Возвращает время начала теста
      */
-    public Long getStartTime(){
-            return this.data.get(3);
-    }
+    public Long getStartTime() { return startTime; }
 
+    /**
+     * Меняет номер варианта
+     */
+    public void setOption(Long option) { this.option = option; }
+
+    /**
+     * Переводит пользователя на следующий вопрос
+     */
+    public void incrementNumberOfQuestion() { this.numberOfQuestion++; }
+
+    /**
+     * Увеличивает количество правильных ответов
+     */
+    public void incrementRightNumberOfQuestion() { this.rightNumberOfQuestion++; }
+
+    /**
+     * Проверяет, выбран ли предмет
+     * @return true если предмет выбран
+     */
+    public boolean isSubjectSelected() {
+        return !NO_SUBJECT.equals(subject);
+    }
 }
