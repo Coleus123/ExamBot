@@ -1,5 +1,10 @@
 // TestStateHandler.java - обновляем использование SubjectManager
-package ru.urfu;
+package ru.urfu.core;
+
+import ru.urfu.model.QuesAns;
+import ru.urfu.manager.SubjectManager;
+import ru.urfu.model.UserData;
+import ru.urfu.model.UserTestDataTracker;
 
 import java.util.ArrayList;
 import java.util.List;

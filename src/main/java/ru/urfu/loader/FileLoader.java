@@ -1,5 +1,7 @@
 // FileLoader.java - добавляем недостающий метод для тестов
-package ru.urfu;
+package ru.urfu.loader;
+
+import ru.urfu.model.QuesAns;
 
 import java.io.File;
 import java.io.IOException;

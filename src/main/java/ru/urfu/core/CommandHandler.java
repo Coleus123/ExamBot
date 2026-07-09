@@ -1,4 +1,8 @@
-package ru.urfu;
+package ru.urfu.core;
+
+import ru.urfu.manager.SubjectManager;
+import ru.urfu.model.UserData;
+import ru.urfu.model.UserTestDataTracker;
 
 import java.util.List;
 

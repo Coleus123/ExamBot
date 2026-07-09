@@ -4,6 +4,8 @@ package ru.urfu;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import ru.urfu.loader.FileLoader;
+import ru.urfu.model.QuesAns;
 
 import java.io.File;
 import java.io.FileWriter;

@@ -1,5 +1,8 @@
 // SubjectManager.java - исправленная версия
-package ru.urfu;
+package ru.urfu.manager;
+
+import ru.urfu.loader.FileLoader;
+import ru.urfu.model.QuesAns;
 
 import java.util.*;
 

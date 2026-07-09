@@ -1,5 +1,5 @@
 // UserTestDataTracker.java
-package ru.urfu;
+package ru.urfu.model;
 
 import java.util.HashMap;
 import java.util.Map;
