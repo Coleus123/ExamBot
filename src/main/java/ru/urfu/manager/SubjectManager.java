@@ -1,4 +1,3 @@
-// SubjectManager.java - исправленная версия
 package ru.urfu.manager;
 
 import ru.urfu.loader.FileLoader;

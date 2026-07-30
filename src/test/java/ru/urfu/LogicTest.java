@@ -1,4 +1,3 @@
-// LogicTest.java - исправленная версия (добавлен тест на hasSubject)
 package ru.urfu;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -56,7 +55,7 @@ public class LogicTest {
     }
 
     /**
-     * Проверяет правильно ли выводит введенный пользователем текст с префиксом
+     * Проверяет, правильно ли выводит введенный пользователем текст с префиксом
      */
     @Test
     public void testResponseMessageInputPrefix() {
@@ -67,7 +66,7 @@ public class LogicTest {
     }
 
     /**
-     * Проверяет правильно ли выводит текст при начале разговора с пользователем
+     * Проверяет, правильно ли выводит текст при начале разговора с пользователем
      */
     @Test
     public void TestResponseMessageStart() {
@@ -78,7 +77,7 @@ public class LogicTest {
     }
 
     /**
-     * Проверяет правильно ли выводит справку
+     * Проверяет, правильно ли выводит справку
      */
     @Test
     public void testResponseMessageHelp() {

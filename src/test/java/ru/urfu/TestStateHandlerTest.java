@@ -1,4 +1,3 @@
-// TestStateHandlerTest.java - тест для TestStateHandler
 package ru.urfu;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -63,6 +62,9 @@ class TestStateHandlerTest {
         testStateHandler = new TestStateHandler(subjectManager, tracker);
     }
 
+    /**
+     * Проверяет выбор существующего предмета
+     */
     @Test
     void handleSubjectSelection_CorrectSubject() {
         tracker.startTest("user1", UserData.NO_SUBJECT);
@@ -71,6 +73,9 @@ class TestStateHandlerTest {
         assertEquals("Математика", tracker.getUserData("user1").getSubject());
     }
 
+    /**
+     * Проверяет выбор несуществующего предмета
+     */
     @Test
     void handleSubjectSelection_WrongSubject() {
         tracker.startTest("user2", UserData.NO_SUBJECT);
@@ -79,6 +84,9 @@ class TestStateHandlerTest {
         assertEquals(UserData.NO_SUBJECT, tracker.getUserData("user2").getSubject());
     }
 
+    /**
+     * Проверяет выбор существующего варианта
+     */
     @Test
     void handleOptionSelection_CorrectOption() {
         tracker.startTest("user3", "Математика");
@@ -87,6 +95,9 @@ class TestStateHandlerTest {
         assertEquals(1L, tracker.getUserData("user3").getOption());
     }
 
+    /**
+     * Проверяет выбор несуществующего варианта
+     */
     @Test
     void handleOptionSelection_WrongOption() {
         tracker.startTest("user4", "Математика");
@@ -95,6 +106,9 @@ class TestStateHandlerTest {
         assertEquals(0L, tracker.getUserData("user4").getOption());
     }
 
+    /**
+     * Проверяет ввод варианта в неверном формате
+     */
     @Test
     void handleOptionSelection_InvalidFormat() {
         tracker.startTest("user5", "Математика");
@@ -103,6 +117,9 @@ class TestStateHandlerTest {
         assertEquals(0L, tracker.getUserData("user5").getOption());
     }
 
+    /**
+     * Проверяет правильный ответ на вопрос
+     */
     @Test
     void handleAnswer_Correct() {
         tracker.startTest("user6", "Математика");
@@ -113,6 +130,9 @@ class TestStateHandlerTest {
         assertEquals(1L, tracker.getUserData("user6").getRightNumberOfQuestion());
     }
 
+    /**
+     * Проверяет неправильный ответ на вопрос
+     */
     @Test
     void handleAnswer_Wrong() {
         tracker.startTest("user7", "Математика");

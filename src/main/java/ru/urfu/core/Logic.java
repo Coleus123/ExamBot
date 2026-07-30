@@ -1,4 +1,3 @@
-// Logic.java
 package ru.urfu.core;
 
 import ru.urfu.manager.SubjectManager;
@@ -27,7 +26,6 @@ public class Logic {
      * Возвращает текст после обработки
      */
     public List<String> ResponseMessage(String text, String userId) {
-        // Обработка команд
         switch (text) {
             case "/start":
                 return commandHandler.handleStart(userId);

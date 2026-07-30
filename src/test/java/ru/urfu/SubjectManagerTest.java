@@ -1,4 +1,3 @@
-// SubjectManagerTest.java - исправленная версия
 package ru.urfu;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -79,7 +78,7 @@ class SubjectManagerTest {
     }
 
     /**
-     * Тестирует метод hasSubject
+     * Проверяет наличие предмета в загруженных данных
      */
     @Test
     public void testHasSubject() {
@@ -89,7 +88,7 @@ class SubjectManagerTest {
     }
 
     /**
-     * Тестирует метод quantityVariants
+     * Проверяет количество вариантов для предмета
      */
     @Test
     public void testQuantityVariants() {

@@ -19,7 +19,7 @@ public class TelegramBot extends TelegramLongPollingBot{
     private String botName;
     private Logic logic;
 
-/**
+    /**
      *Конструктор телеграмм-бот
      */
 
@@ -30,7 +30,7 @@ public class TelegramBot extends TelegramLongPollingBot{
     }
 
 
-/**
+    /**
      * Отправляет ответ на сообщение пользователя
      */
 
@@ -55,7 +55,7 @@ public class TelegramBot extends TelegramLongPollingBot{
     }
 
 
-/**
+    /**
      * возвращает бот-токен
      */
 
@@ -65,7 +65,7 @@ public class TelegramBot extends TelegramLongPollingBot{
     }
 
 
-/**
+    /**
      * Возвращает имя бота
      */
 

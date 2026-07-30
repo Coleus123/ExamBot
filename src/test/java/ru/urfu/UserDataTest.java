@@ -1,4 +1,3 @@
-// UserDataTest.java - исправленная версия
 package ru.urfu;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -18,7 +17,7 @@ public class UserDataTest {
     }
 
     /**
-     * Проверяет правильно ли создается пользователь, проходящий тест
+     * Проверяет, правильно ли создается пользователь, проходящий тест
      */
     @Test
     public void userDataConstructorTest() throws InterruptedException {
@@ -31,7 +30,7 @@ public class UserDataTest {
     }
 
     /**
-     * Проверяет правильно ли присваивается вариант
+     * Проверяет, правильно ли присваивается вариант
      */
     @Test
     public void setOptionTest() {
@@ -40,7 +39,7 @@ public class UserDataTest {
     }
 
     /**
-     * Проверяет правильно ли инкрементируется номер вопроса
+     * Проверяет, правильно ли инкрементируется номер вопроса
      */
     @Test
     public void incrementNumberOfQuestionTest() {
@@ -49,7 +48,7 @@ public class UserDataTest {
     }
 
     /**
-     * Проверяет правильно ли инкрементируется количество правильных ответов
+     * Проверяет, правильно ли инкрементируется количество правильных ответов
      */
     @Test
     public void incrementRightNumberOfQuestionTest() {
@@ -58,7 +57,7 @@ public class UserDataTest {
     }
 
     /**
-     * Проверяет метод isSubjectSelected
+     * Проверяет определение выбранного предмета
      */
     @Test
     public void isSubjectSelectedTest() {
