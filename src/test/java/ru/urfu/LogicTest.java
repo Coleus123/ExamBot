@@ -1,3 +1,4 @@
+
 package ru.urfu;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -8,13 +9,16 @@ import ru.urfu.core.Logic;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+
 /**
  * Тест текстовых методов бота
  */
+
 public class LogicTest {
     Logic logic;
 
@@ -47,11 +51,25 @@ public class LogicTest {
         FileWriter writer2 = new FileWriter(firstAnsw);
         writer2.write("Ответ");
         writer2.close();
+
+        File directory1 = new File(tempDir, "Stat");
+        directory1.mkdirs();
+
+        File subject1 = new File(directory1, "Математика");
+        subject1.mkdirs();
+
+        File user1 = new File(subject1, "user123");
+        try (FileWriter writer1 = new FileWriter(user1)) {
+            writer1.write("1 5 20000 10000");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @BeforeEach
     void setUp() {
-        logic = new Logic(tempDir.getPath() + "\\Test");
+        logic = new Logic(tempDir.getPath() + "\\Test",
+                tempDir.getPath() + "\\Stat");
     }
 
     /**
@@ -74,6 +92,19 @@ public class LogicTest {
         String ExpectedMessage = "Привет! Я Текстовый бот. Напиши /help, чтобы узнать больше";
         List<String> OutputMessage = logic.ResponseMessage(InputMessage, "user2");
         assertEquals(ExpectedMessage, OutputMessage.get(0));
+    }
+
+    /**
+     * Проверяет, правильно ли выдается статистика
+     */
+    @Test
+    public void testStatistics(){
+        String input = "/statistic";
+        List<String> output = logic.ResponseMessage(input, "user123");
+        assertEquals("Статистика за последние 5 вариантов по каждому предмету:",
+                output.get(0));
+        assertEquals("Математика: средний балл 3/1, " +
+                "среднее время выполнения задач - 15 секунд.", output.get(1));
     }
 
     /**

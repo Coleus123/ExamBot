@@ -2,6 +2,7 @@ package ru.urfu.core;
 
 import ru.urfu.manager.SubjectManager;
 import ru.urfu.model.UserTestDataTracker;
+import ru.urfu.UserStatistics;
 
 import java.util.List;
 
@@ -14,12 +15,14 @@ public class Logic {
     private final CommandHandler commandHandler;
     private final TestStateHandler testStateHandler;
 
-    public Logic(String filePath) {
+    public Logic(String filePath, String statFilePath) {
         this.subjectManager = new SubjectManager();
         this.subjectManager.populateData(filePath);
         this.tracker = new UserTestDataTracker();
-        this.commandHandler = new CommandHandler(subjectManager, tracker);
-        this.testStateHandler = new TestStateHandler(subjectManager, tracker);
+        UserStatistics userStatistics = new UserStatistics();
+        userStatistics.populateStatistics(statFilePath);
+        this.commandHandler = new CommandHandler(subjectManager, tracker, userStatistics);
+        this.testStateHandler = new TestStateHandler(subjectManager, tracker, userStatistics);
     }
 
     /**
@@ -35,6 +38,8 @@ public class Logic {
                 return commandHandler.handleExitTest(userId);
             case "/startTest":
                 return commandHandler.handleStartTest(userId);
+            case "/statistic":
+                return commandHandler.handleStatistic(userId);
             default:
                 if (tracker.isUserInTest(userId)) {
                     return testStateHandler.handleTestInput(userId, text);

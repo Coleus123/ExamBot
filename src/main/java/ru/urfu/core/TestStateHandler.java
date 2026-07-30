@@ -4,6 +4,7 @@ import ru.urfu.model.QuesAns;
 import ru.urfu.manager.SubjectManager;
 import ru.urfu.model.UserData;
 import ru.urfu.model.UserTestDataTracker;
+import ru.urfu.UserStatistics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,15 +15,18 @@ import java.util.List;
 public class TestStateHandler {
     private final SubjectManager subjectManager;
     private final UserTestDataTracker tracker;
+    private final UserStatistics userStatistics;
 
     /**
      * Конструктор обработчика состояния теста
      * @param subjectManager менеджер предметов
      * @param tracker трекер данных пользователей
+     * @param userStatistics статистика пользователей
      */
-    public TestStateHandler(SubjectManager subjectManager, UserTestDataTracker tracker) {
+    public TestStateHandler(SubjectManager subjectManager, UserTestDataTracker tracker, UserStatistics userStatistics) {
         this.subjectManager = subjectManager;
         this.tracker = tracker;
+        this.userStatistics = userStatistics;
     }
 
     /**
@@ -111,6 +115,13 @@ public class TestStateHandler {
                     data.getRightNumberOfQuestion() + "/" + variant.getNumberOfQuestions() +
                     ". Пройти тест заново или выйти?";
             output.add(result);
+
+            userStatistics.addStat(
+                    data.getSubject(),
+                    userId,
+                    data.getRightNumberOfQuestion(),
+                    tracker.getElapsedTime(userId)
+            );
         } else if (data.getNumberOfQuestion() < variant.getNumberOfQuestions()) {
             String question = variant.getQuestion(data.getNumberOfQuestion().intValue());
             output.add(question);
