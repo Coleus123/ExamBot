@@ -1,4 +1,3 @@
-// UserTestDataTracker.java
 package ru.urfu.model;
 
 import java.util.HashMap;

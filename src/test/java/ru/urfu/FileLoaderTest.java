@@ -1,4 +1,3 @@
-// FileLoaderTest.java - новый тест
 package ru.urfu;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -25,21 +24,16 @@ class FileLoaderTest {
 
     @BeforeAll
     public static void setUpBeforeClass() throws Exception {
-        // Создаем структуру для теста
         File directory = new File(tempDir, "Test");
         directory.mkdirs();
-
         File subject = new File(directory, "Математика");
         subject.mkdirs();
-
-        // Вариант 1
         File variant1 = new File(subject, "1");
         variant1.mkdirs();
         File answ1 = new File(variant1, "answ");
         answ1.mkdirs();
         File ques1 = new File(variant1, "ques");
         ques1.mkdirs();
-
         File q1 = new File(ques1, "1.txt");
         FileWriter w1 = new FileWriter(q1);
         w1.write("Вопрос 1");
@@ -48,7 +42,6 @@ class FileLoaderTest {
         FileWriter w2 = new FileWriter(a1);
         w2.write("Ответ 1");
         w2.close();
-
         File q2 = new File(ques1, "2.txt");
         FileWriter w3 = new FileWriter(q2);
         w3.write("Вопрос 2");
@@ -57,15 +50,12 @@ class FileLoaderTest {
         FileWriter w4 = new FileWriter(a2);
         w4.write("Ответ 2");
         w4.close();
-
-        // Вариант 2
         File variant2 = new File(subject, "2");
         variant2.mkdirs();
         File answ2 = new File(variant2, "answ");
         answ2.mkdirs();
         File ques2 = new File(variant2, "ques");
         ques2.mkdirs();
-
         File q3 = new File(ques2, "1.txt");
         FileWriter w5 = new FileWriter(q3);
         w5.write("Вопрос 3");
@@ -76,6 +66,9 @@ class FileLoaderTest {
         w6.close();
     }
 
+    /**
+     * Проверяет загрузку данных из корректной директории
+     */
     @Test
     public void testLoadData() {
         fileLoader = new FileLoader();
@@ -86,6 +79,9 @@ class FileLoaderTest {
         assertEquals(2, data.get("Математика").size());
     }
 
+    /**
+     * Проверяет загрузку данных из пустой директории
+     */
     @Test
     public void testLoadDataEmptyDirectory() {
         File emptyDir = new File(tempDir, "Empty");
@@ -97,6 +93,9 @@ class FileLoaderTest {
         assertTrue(data.isEmpty());
     }
 
+    /**
+     * Проверяет загрузку данных из несуществующей директории
+     */
     @Test
     public void testLoadDataNonExistentDirectory() {
         fileLoader = new FileLoader();
@@ -105,6 +104,9 @@ class FileLoaderTest {
         assertTrue(data.isEmpty());
     }
 
+    /**
+     * Проверяет загрузку данных из директории только с .gitkeep
+     */
     @Test
     public void testLoadDataWithGitkeep() throws Exception {
         File directory = new File(tempDir, "TestGitkeep");

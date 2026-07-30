@@ -59,7 +59,8 @@ public class QuesAns {
     }
     /**
      * Добавляет новый вопрос и соответствующий ему ответ в список.
-     */ public  void addQuestionAndAnswer(String question, String answer) {
+     */
+    public  void addQuestionAndAnswer(String question, String answer) {
         this.questions.add(question);
         this.answers.add(answer);
     }

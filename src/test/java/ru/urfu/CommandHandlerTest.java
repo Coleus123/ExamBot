@@ -1,4 +1,3 @@
-// CommandHandlerTest.java - тест для CommandHandler
 package ru.urfu;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -28,6 +27,9 @@ class CommandHandlerTest {
         commandHandler = new CommandHandler(subjectManager, tracker);
     }
 
+    /**
+     * Проверяет START для пользователя не в тесте
+     */
     @Test
     void handleStart_WhenUserNotInTest() {
         List<String> result = commandHandler.handleStart("user1");
@@ -35,6 +37,9 @@ class CommandHandlerTest {
         assertFalse(tracker.isUserInTest("user1"));
     }
 
+    /**
+     * Проверяет START для пользователя в тесте
+     */
     @Test
     void handleStart_WhenUserInTest() {
         tracker.startTest("user2", UserData.NO_SUBJECT);
@@ -45,6 +50,9 @@ class CommandHandlerTest {
         assertFalse(tracker.isUserInTest("user2"));
     }
 
+    /**
+     * Проверяет HELP
+     */
     @Test
     void handleHelp() {
         tracker.startTest("user3", UserData.NO_SUBJECT);
@@ -55,12 +63,18 @@ class CommandHandlerTest {
         assertFalse(tracker.isUserInTest("user3"));
     }
 
+    /**
+     * Проверяет выход из теста, когда пользователь не в тесте
+     */
     @Test
     void handleExitTest_WhenUserNotInTest() {
         List<String> result = commandHandler.handleExitTest("user4");
         assertEquals(List.of(Constants.EXIT_TEST_FALSE), result);
     }
 
+    /**
+     * Проверяет выход из теста, когда пользователь в тесте
+     */
     @Test
     void handleExitTest_WhenUserInTest() {
         tracker.startTest("user5", UserData.NO_SUBJECT);
@@ -71,6 +85,9 @@ class CommandHandlerTest {
         assertFalse(tracker.isUserInTest("user5"));
     }
 
+    /**
+     * Проверяет начало тестирования
+     */
     @Test
     void handleStartTest() {
         List<String> result = commandHandler.handleStartTest("user6");

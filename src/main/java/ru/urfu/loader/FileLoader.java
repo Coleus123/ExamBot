@@ -1,4 +1,3 @@
-// FileLoader.java - добавляем недостающий метод для тестов
 package ru.urfu.loader;
 
 import ru.urfu.model.QuesAns;
@@ -134,7 +133,6 @@ public class FileLoader {
             return contents;
         }
 
-        // Сортировка по номеру файла
         Arrays.sort(files, (f1, f2) -> {
             try {
                 int num1 = Integer.parseInt(f1.getName().split("\\.")[0]);

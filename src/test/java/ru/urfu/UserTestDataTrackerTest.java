@@ -1,4 +1,3 @@
-// UserTestDataTrackerTest.java - исправленная версия
 package ru.urfu;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +35,7 @@ class UserTestDataTrackerTest {
     }
 
     /**
-     * Проверяет метод selectOption
+     * Проверяет выбор варианта теста
      */
     @Test
     void selectOptionTest() {
@@ -46,7 +45,7 @@ class UserTestDataTrackerTest {
     }
 
     /**
-     * Проверяет метод moveToNextQuestion
+     * Проверяет переход к следующему вопросу
      */
     @Test
     void moveToNextQuestionTest() {
@@ -56,7 +55,7 @@ class UserTestDataTrackerTest {
     }
 
     /**
-     * Проверяет метод markAnswer
+     * Проверяет отметку ответа пользователя
      */
     @Test
     void markAnswerTest() {
@@ -68,7 +67,7 @@ class UserTestDataTrackerTest {
     }
 
     /**
-     * Проверяет метод removeUser
+     * Проверяет удаление пользователя из трекера
      */
     @Test
     void removeUserTest() {
@@ -79,7 +78,7 @@ class UserTestDataTrackerTest {
     }
 
     /**
-     * Проверяет метод getElapsedTime
+     * Проверяет получение времени прохождения теста
      */
     @Test
     void getElapsedTimeTest() throws InterruptedException {
@@ -89,7 +88,7 @@ class UserTestDataTrackerTest {
     }
 
     /**
-     * Проверяет метод isUserInTest
+     * Проверяет наличие пользователя в тесте
      */
     @Test
     void isUserInTestTest() {

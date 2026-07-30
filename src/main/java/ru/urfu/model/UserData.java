@@ -1,4 +1,3 @@
-// UserData.java
 package ru.urfu.model;
 
 /**

@@ -1,4 +1,3 @@
-// TestStateHandler.java - обновляем использование SubjectManager
 package ru.urfu.core;
 
 import ru.urfu.model.QuesAns;
